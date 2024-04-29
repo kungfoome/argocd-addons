@@ -1,0 +1,4 @@
+app:
+  labels:
+    'custom.kubernetes.io/cluster': 'argo-dev'
+    'custom.test.override': '999'

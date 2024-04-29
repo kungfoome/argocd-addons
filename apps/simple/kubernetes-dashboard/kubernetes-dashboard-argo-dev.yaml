@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-dashboard-argo-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/kungfoome/argocd-addons.git
+      targetRevision: HEAD
+      ref: values
+    - chart: kubernetes-dashboard
+      repoURL: https://kubernetes.github.io/dashboard/
+      targetRevision: 7.3.2
+      helm:
+        releaseName: kubernetes-dashboard
+        ignoreMissingValueFiles: true
+        valueFiles:
+          - $values/addons/config/base/kubernetes-dashboard/values.yaml
+          - $values/addons/config/overlays/environment/dev/kubernetes-dashboard/values.yaml
+          - $values/addons/config/overlays/cluster/argo-dev/kubernetes-dashboard/values.yaml
+  destination:
+    name: argo-dev
+    namespace: kubernetes-dashboard
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m

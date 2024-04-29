@@ -1,0 +1,3 @@
+app:
+  labels:
+    'custom.kubernetes.io/env': 'dev'

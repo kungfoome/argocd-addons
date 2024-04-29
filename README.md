@@ -70,3 +70,21 @@ Within the dind container, run
 ```
 
 Copy this command and exit the dind container. You can then run those commands to remove and cleanup anything that was done from the localhost and start from a clean slate.
+
+# Tutorial
+
+## Simple Apps
+
+In this tutorial you will deploy simple ArgoCD applications. This is a very manual process and you will quickly see the disadvantages to using this method.
+
+## App of Apps
+
+In this tutorial you will deploy the same applications as the simple applications, but we will do it a more gitops way. While this is a much better pattern, you will quickly see that this doesn't scale very well if you are dealing with more than a handful of clusters.
+
+## AppSets
+
+In this tutorial you will see how we can easily scale and some best practices so that you can effectively manage 100s of clusters. While there are still some ArgoCD limitations, this can scale very well from management perspective.
+
+## App of AppSets
+
+In this tutorial we will fill in the missing piece to make using AppSets fulling gitops, but in a way that is still managable and without Kargo.
