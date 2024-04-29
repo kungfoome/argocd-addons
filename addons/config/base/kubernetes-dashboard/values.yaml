@@ -1,4 +1,4 @@
-app:
+web:
   labels:
     'custom.kubernetes.io/service': 'kubernetes-dashboard'
     'custom.test.override': '123'
