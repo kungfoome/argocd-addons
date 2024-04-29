@@ -18,6 +18,13 @@ docker network create argo-network
 docker run --rm -it --privileged --network argo-network -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd)/scripts:/scripts docker:latest sh -c "apk add bash && /bin/bash"
 ```
 
+If using PowerShell:
+
+```shell
+docker network create argo-network
+docker run --rm -it --privileged --network argo-network -v /var/run/docker.sock:/var/run/docker.sock -v ${pwd}/scripts:/scripts docker:latest sh -c "apk add bash && /bin/bash"
+```
+
 # Running The Commands
 
 In each section, there will be a script that will print the commands that should be run. I decided to do it this way as there is some back and forth between the localhost and the container. I tried to make it so that most of the commands are run inside the dind container and that way anyone can follow along, no matter the operating system of the localhost.

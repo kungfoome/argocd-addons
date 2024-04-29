@@ -1,0 +1,3 @@
+podLabels:
+  'custom.kubernetes.io/service': 'datadog-operator'
+  'custom.test.override': '123'

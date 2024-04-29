@@ -1,0 +1,2 @@
+podLabels:
+  'custom.kubernetes.io/env': 'dev'

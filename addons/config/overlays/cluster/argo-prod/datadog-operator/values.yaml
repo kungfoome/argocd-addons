@@ -1,0 +1,3 @@
+podLabels:
+  'custom.kubernetes.io/cluster': 'argo-prod'
+  'custom.test.override': '999'

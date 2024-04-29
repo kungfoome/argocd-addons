@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: datadog-operator-argo-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/kungfoome/argocd-addons.git
+      targetRevision: HEAD
+      ref: values
+    - chart: datadog-operator
+      repoURL: https://helm.datadoghq.com
+      targetRevision: 1.6.0
+      helm:
+        releaseName: datadog-operator
+        ignoreMissingValueFiles: true
+        valueFiles:
+          - $values/addons/config/base/datadog-operator/values.yaml
+          - $values/addons/config/overlays/environment/dev/datadog-operator/values.yaml
+          - $values/addons/config/overlays/cluster/argo-dev/datadog-operator/values.yaml
+  destination:
+    name: argo-dev
+    namespace: datadog
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
