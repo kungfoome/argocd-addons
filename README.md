@@ -88,12 +88,16 @@ Copy this command and exit the dind container. You can then run those commands t
 
 In this tutorial you will deploy simple ArgoCD applications. This is a very manual process and you will quickly see the disadvantages to using this method.
 
+```shell
+kubectl apply -f .\apps\argo-control-plane\ -f .\apps\argo-prod\ -f .\apps\argo-dev\
+```
+
 ## App of Apps
 
 In this tutorial you will deploy the same applications as the simple applications, but we will do it a more gitops way. While this is a much better pattern, you will quickly see that this doesn't scale very well if you are dealing with more than a handful of clusters.
 
 ```shell
- kubectl apply -f .\app-of-apps\argo-control-plane\bootstrap.yaml -f .\app-of-apps\argo-prod\bootstrap.yaml -f .\app-of-apps\argo-dev\bootstrap.yaml
+kubectl apply -f .\app-of-apps\argo-control-plane\bootstrap.yaml -f .\app-of-apps\argo-prod\bootstrap.yaml -f .\app-of-apps\argo-dev\bootstrap.yaml
 ```
 
 ## AppSets
