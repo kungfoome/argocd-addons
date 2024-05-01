@@ -107,3 +107,7 @@ kubectl apply -f .\appsets
 ## App of AppSets
 
 In this tutorial we will fill in the missing piece to make using AppSets fulling gitops, but in a way that is still managable and without Kargo.
+
+```shell
+kubectl apply -f .\app-of-appsets\
+```
