@@ -92,9 +92,17 @@ In this tutorial you will deploy simple ArgoCD applications. This is a very manu
 
 In this tutorial you will deploy the same applications as the simple applications, but we will do it a more gitops way. While this is a much better pattern, you will quickly see that this doesn't scale very well if you are dealing with more than a handful of clusters.
 
+```shell
+ kubectl apply -f .\app-of-apps\argo-control-plane\bootstrap.yaml -f .\app-of-apps\argo-prod\bootstrap.yaml -f .\app-of-apps\argo-dev\bootstrap.yaml
+```
+
 ## AppSets
 
 In this tutorial you will see how we can easily scale and some best practices so that you can effectively manage 100s of clusters. While there are still some ArgoCD limitations, this can scale very well from management perspective.
+
+```shell
+kubectl apply -f .\appsets
+```
 
 ## App of AppSets
 

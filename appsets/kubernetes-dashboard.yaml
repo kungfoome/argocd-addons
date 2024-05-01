@@ -1,0 +1,70 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-kubernetes-dashboard
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - merge:
+        mergeKeys: [server]
+        generators:
+          - clusters:
+              values:
+                addonChart: kubernetes-dashboard
+                addonChartVersion: 7.3.2
+                addonChartRepository: https://kubernetes.github.io/dashboard/
+              selector:
+                matchLabels:
+                  argocd.argoproj.io/secret-type: cluster
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: 7.3.2
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: 7.3.2
+  template:
+    metadata:
+      name: addon-{{.name}}-{{.values.addonChart}}
+      namespace: argocd
+    spec:
+      project: default
+      sources:
+        - repoURL: https://github.com/kungfoome/argocd-addons.git
+          targetRevision: HEAD
+          ref: values
+        - chart: '{{.values.addonChart}}'
+          repoURL: '{{.values.addonChartRepository}}'
+          targetRevision: '{{.values.addonChartVersion}}'
+          helm:
+            releaseName: '{{.values.addonChart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/addons/config/base/{{.values.addonChart}}/values.yaml
+              - $values/addons/config/overlays/environment/{{.metadata.labels.environment}}/{{.values.addonChart}}/values.yaml
+              - $values/addons/config/overlays/cluster/{{.name}}/{{.values.addonChart}}/values.yaml
+      destination:
+        namespace: '{{.values.addonChart}}'
+        name: '{{.name}}'
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        retry:
+          limit: 1
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 1m
