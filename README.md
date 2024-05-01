@@ -7,7 +7,18 @@ These are the dependencies required to be installed on the local machine.
 - argocd cli
 - k3d cli
 
+# Architecture
+
+For these exercises, we will deploy a control-plane architecture. This means that we will only have 1 ArgoCD instance stood up and it will managed multiple clusters. You can deploy each exercise in the same manner if using an ArgoCD instance for each cluster. The only difference would be that the destination can be set to in-cluster. In some examples, this actually could make deployment easier.
+
+We will be deploying everything into one ArgoCD instance and then it will deploy the add-ons to the correct clusters. For this reason, it is best to go through the exercise as is and then you can experiment and add different clusters if you would like afterwards.
+
+# Introduction
+
+
 # Start DIND Container
+
+To start, fork this repo and clone it to your computer. Open a terminal and make sure you cd to the cloned repo in the root directory. This will ensure that scripts gets attached and you can run the necassary commands.
 
 To make the overall changes universal, I decided to have a docker container connect to the docker socket. This way we can run linux commands, even if you are running windows.
 
@@ -69,7 +80,7 @@ Within the dind container, run
 /scripts/cleanup-localhost-generator.sh
 ```
 
-Copy this command and exit the dind container. You can then run those commands to remove and cleanup anything that was done from the localhost and start from a clean slate.
+Copy this command and exit the dind container. You can then run those commands to remove and cleanup anything that was done from the local host and start from a clean slate.
 
 # Tutorial
 
